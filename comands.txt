@@ -1,0 +1,59 @@
+python manage.py shell
+from news.models import *
+1)--------------------------------------------
+User.objects.create_user('FunnyBunny')
+User.objects.create_user('GutsyHeart')
+2)--------------------------------------------
+fb = User.objects.get(username = 'FunnyBunny')
+Author.objects.create(user=fb)
+gh = User.objects.get(username = 'GutsyHeart')
+Author.objects.create(user=fb)
+3)--------------------------------------------
+Category.objects.create()
+Category.objects.create('Culture')
+Category.objects.create(name='Science')
+Category.objects.create(name='Society')
+4)--------------------------------------------
+Post.objects.create(author=fb, type='Article', title='Starlink достиг безубыточности')
+Post.objects.create(author=gh, type='Article', title='Выставка "Сальвадор Дали. Тайнопись" в Москве')
+Post.objects.create(author=gh, type='News', title='Лунное затмение 5 мая 2023 года')
+5)--------------------------------------------
+int = Category.objects.get(name='Internet')
+cul = Category.objects.get(name='Culture')
+sci = Category.objects.get(name='Science')
+Post.objects.all()[0].category.add(int)
+Post.objects.all()[0].category.add(sci)
+Post.objects.all()[1].category.add(cul)
+Post.objects.all()[2].category.add(cul)
+6)--------------------------------------------
+Comment.objects.create(post=Post.objects.all()[0], user=User.objects.all()[0], text='Это мой пост!')
+Comment.objects.create(post=Post.objects.all()[0], user=User.objects.all()[1], text='Невероятно!')
+Comment.objects.create(post=Post.objects.all()[1], user=User.objects.all()[1], text='А это мой пост!')
+Comment.objects.create(post=Post.objects.all()[2], user=User.objects.all()[0], text='Неожиданно!')
+7)--------------------------------------------
+Post.objects.all()[0].like()
+Post.objects.all()[0].like()
+Post.objects.all()[0].like()
+Post.objects.all()[0].like()
+Post.objects.all()[0].like()
+Post.objects.all()[1].dislike()
+Post.objects.all()[1].dislike()
+Post.objects.all()[1].dislike()
+Post.objects.all()[2].like()
+Post.objects.all()[2].like()
+Comment.objects.all()[0].like()
+Comment.objects.all()[0].like()
+Comment.objects.all()[1].like()
+Comment.objects.all()[2].like()
+8)--------------------------------------------
+Author.objects.all()[0].update_rating()
+Author.objects.all()[1].update_rating()
+9)--------------------------------------------
+Author.objects.order_by('-rating').values('user__username')[0]
+10)-------------------------------------------
+Post.objects.order_by('-rating')[0].time_in.date()
+Post.objects.order_by('-rating')[0].rating
+Post.objects.order_by('-rating')[0].title
+Post.objects.order_by('-rating')[0].preview()
+11)-------------------------------------------
+Post.objects.order_by('-rating')[0].comment_set.values('time_in__date', 'user__username', 'rating', 'text')
