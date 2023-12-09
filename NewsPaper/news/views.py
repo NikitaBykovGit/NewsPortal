@@ -1,3 +1,16 @@
+from django.views.generic import ListView, DetailView
 from django.shortcuts import render
+from .models import Post
 
-# Create your views here.
+
+class PostsList(ListView):
+    model = Post
+    ordering = "-time_in"
+    template_name = 'news/posts.html'
+    context_object_name = 'posts'
+
+
+class PostDetail(DetailView):
+    model = Post
+    template_name = 'news/post.html'
+    context_object_name = 'post'

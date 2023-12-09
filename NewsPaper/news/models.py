@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 
 class RatingManger(models.Model):
     rating = models.IntegerField(default=0)
+    text = models.TextField()
+    time_in = models.DateTimeField(auto_now_add=True)
 
     def like(self):
         self.rating += 1
@@ -13,6 +15,9 @@ class RatingManger(models.Model):
     def dislike(self):
         self.rating -= 1
         self.save()
+
+    def __str__(self):
+        return f'{self.text}'
 
     class Meta:
         abstract = True
@@ -57,10 +62,8 @@ TYPE = (
 class Post(RatingManger):
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     type = models.CharField(max_length=12, choices=TYPE)
-    time_in = models.DateTimeField(auto_now_add=True)
     category = models.ManyToManyField(Category, through='PostCategory')
     title = models.CharField(max_length=64)
-    text = models.TextField()
 
     def preview(self):
         return f'{self.text[:124]}...'
@@ -74,13 +77,3 @@ class PostCategory(models.Model):
 class Comment(RatingManger):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    text = models.TextField()
-    time_in = models.DateTimeField(auto_now_add=True)
-
-    def like(self):
-        self.rating += 1
-        self.save()
-
-    def dislike(self):
-        self.rating -= 1
-        self.save()
