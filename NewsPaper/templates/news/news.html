@@ -2,29 +2,29 @@
 
 {% load custom_filters %}
 
-{% block title %}Посты{% endblock %}
+{% block title %}Новости{% endblock %}
 
 {% block content %}
-    <h1>Посты: {{ posts|length }}</h1>
+    <h1>Новости: {{ posts|length }}</h1>
 {% if posts %}
     <table>
         <tr>
             <td>Заголовок</td>
             <td>Дата публикации</td>
-            <td>Тип</td>
             <td>Текст</td>
         </tr>
         {% for post in posts %}
+        {% if post.type == 'News' %}
         <tr>
             <td> {{ post.title|censor }} </td>
             <td> {{ post.time_in|date:"d-m-Y" }} </td>
-            <td> {{ post.type }} </td>
             <td> {{ post.text|truncatewords:20|censor }}</td>
         </tr>
+        {% endif %}
         {% endfor %}
     </table>
 {% else %}
-    <h2>Посты Закончились</h2>
+    <h2>Новости Закончились</h2>
 {% endif %}
 
 {% if page_obj.has_previous %}
