@@ -2,10 +2,10 @@
 
 {% load custom_filters %}
 
-{% block title %}Новости{% endblock %}
+{% block title %}Статьи{% endblock %}
 
 {% block content %}
-    <h1>Новости: {{ posts|length }}</h1>
+    <h1>Статьи: {{ posts|length }}</h1>
 {% if posts %}
     <table>
         <tr>
@@ -14,7 +14,7 @@
             <td>Текст</td>
         </tr>
         {% for post in posts %}
-        {% if post.type == 'News' %}
+        {% if post.type == 'Article' %}
         <tr>
             <td> {{ post.title|censor }} </td>
             <td> {{ post.time_in|date:"d-m-Y" }} </td>
@@ -24,7 +24,7 @@
         {% endfor %}
     </table>
 {% else %}
-    <h2>Новости Закончились</h2>
+    <h2>Статьи Закончились</h2>
 {% endif %}
 
 {% include "news/pagination.html" %}
