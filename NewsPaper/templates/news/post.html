@@ -2,9 +2,17 @@
 
 {% load custom_filters %}
 
+{% block navigation %}
+    <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{ post.id }}/update">Редактировать</a></li>
+    <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{ post.id }}/delete">Удалить</a></li>
+{% endblock navigation %}
+
 {% block title %}Пост{% endblock %}
 
 {% block content %}
+
     <h1>{{ post.title|censor }} {{ post.time_in|date:"d-m-Y" }}</h1>
-{{ post.text|censor }}
-{% endblock %}
+
+    {{ post.text|censor }}
+
+{% endblock content %}
