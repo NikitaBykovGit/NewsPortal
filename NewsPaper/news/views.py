@@ -1,6 +1,7 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.shortcuts import render
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from .models import Post
 from .forms import PostForm
 from .filters import PostFilter
@@ -37,13 +38,15 @@ class PostSearch(ListView):
         return context
 
 
-class PostUpdate(UpdateView):
+class PostUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = ('news.change_post',)
     form_class = PostForm
     model = Post
     template_name = 'news/post_edit.html'
 
 
-class PostDelete(DeleteView):
+class PostDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = ('news.delete_post',)
     model = Post
     template_name = 'news/post_delete.html'
     success_url = reverse_lazy('posts_list')
@@ -60,7 +63,8 @@ class ArticlesList(ListView):
         return Post.objects.filter(type='Article').order_by('-time_in')
 
 
-class ArticleCreate(CreateView):
+class ArticleCreate(PermissionRequiredMixin, CreateView):
+    permission_required = ('news.add_post',)
     form_class = PostForm
     model = Post
     template_name = 'news/post_edit.html'
@@ -83,7 +87,8 @@ class NewsList(ListView):
         return Post.objects.filter(type='News').order_by('-time_in')
 
 
-class NewsCreate(CreateView):
+class NewsCreate(PermissionRequiredMixin, CreateView):
+    permission_required = ('news.add_post',)
     form_class = PostForm
     model = Post
     template_name = 'news/post_edit.html'
