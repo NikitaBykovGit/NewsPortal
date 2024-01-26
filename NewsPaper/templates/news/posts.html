@@ -1,0 +1,24 @@
+{% extends 'default.html' %}
+
+{% load custom_filters %}
+
+{% block title %}Посты{% endblock %}
+
+{% block navigation %}
+    <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'news' 'news' %}">Новости</a></li>
+    <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'news' 'articles' %}">Статьи</a></li>
+    <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'post_search' %}">Поиск</a></li>
+
+{% endblock navigation %}
+
+{% block content %}
+    <h1>Посты: {{ page_obj.paginator.count }}</h1>
+    {% if posts %}
+        {% include "news/post_list.html" %}
+    {% else %}
+        <h2>Посты Закончились</h2>
+    {% endif %}
+
+    {% include "news/pagination.html" %}
+
+{% endblock content %}

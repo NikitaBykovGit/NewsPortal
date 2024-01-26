@@ -1,0 +1,34 @@
+{% extends 'default.html' %}
+
+{% load custom_filters %}
+
+{% block navigation %}
+    {% if post.author == request.user.author %}
+        {% if perms.news.change_post %}
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'post_update' post.type|get_url post.id %}">Редактировать</a></li>
+        {% endif %}
+        {% if perms.news.delete_post %}
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'post_delete' post.type|get_url post.id %}">Удалить</a></li>
+        {% endif %}
+    {% endif %}
+{% endblock navigation %}
+
+{% block title %}Пост{% endblock %}
+
+{% block content %}
+    <h1>{{ post.title|censor }}</h1>
+    <h3>Дата публикации: {{ post.time_in|date:"d-m-Y" }} Автор: <a href="{% url 'profile' post.author.user_id %}">{{ post.author.user }}</a>
+        Рейтинг: {{ post.rating }}</h3>
+    <span>{{ post.update_rating }}</span>
+    <form method="post" action = "{% url 'like' post.type|get_url post.id %}">
+        {% csrf_token %}
+        <input type="submit" value="Like" />
+    </form>
+    <form method="post" action = "{% url 'dislike' post.type|get_url post.id %}">
+        {% csrf_token %}
+        <input type="submit" value="Dislike" />
+    </form>
+    <br>
+    {{ post.text|censor }}
+
+{% endblock content %}

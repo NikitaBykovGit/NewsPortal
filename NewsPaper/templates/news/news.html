@@ -1,0 +1,23 @@
+{% extends 'default.html' %}
+
+{% load custom_filters %}
+
+{% block title %} page_title {% endblock title %}
+
+{% block navigation %}
+    {% if perms.news.add_post %}
+        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'post_create' post.type|get_url %}">Создать</a></li>
+    {% endif %}
+{% endblock navigation %}
+
+{% block content %}
+    <h1>{{ post_type }}: {{ page_obj.paginator.count }}</h1>
+{% if posts %}
+    {% include "news/post_list.html" %}
+{% else %}
+    <h2>Новости Закончились</h2>
+{% endif %}
+
+{% include "news/pagination.html" %}
+
+{% endblock content %}
