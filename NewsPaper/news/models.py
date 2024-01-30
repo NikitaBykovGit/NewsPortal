@@ -93,6 +93,9 @@ class Post(RatingManger):
         self.rating = likes - dislikes
         self.save()
 
+    def get_category(self):
+        return ",".join([str(cat) for cat in self.category.all()])
+
 
 class PostCategory(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
