@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from news.models import Category, Post
+from news.models import Category
 
 
 class Command(BaseCommand):
@@ -21,5 +21,3 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.SUCCESS(f'Succesfully deleted all news from category {category}'))
         except Category.DoesNotExist:
             self.stdout.write(self.style.ERROR(f'Could not find category {options["category"]}'))
-
-

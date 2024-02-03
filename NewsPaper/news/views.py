@@ -56,12 +56,13 @@ class NewsList(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if self.kwargs['type'] == 'articles':
+        post_type = self.kwargs['type']
+        if post_type == 'articles':
             page_title = 'Статьи'
-        if self.kwargs['type'] == 'news':
+        if post_type == 'news':
             page_title = 'Новости'
-        context['post_type'] = page_title
-        print(context['post_type'])
+        context['page_title'] = page_title
+        context['post_type'] = post_type
         return context
 
 
@@ -119,7 +120,6 @@ class PostCreate(PermissionRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        print(context)
         if self.kwargs['type'] == 'articles':
             context['page_action'] = 'Создание статьи'
         if self.kwargs['type'] == 'news':
