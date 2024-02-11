@@ -55,7 +55,7 @@ CATEGORY = (
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=12, choices=CATEGORY, default='Internet', unique=True)
+    name = models.CharField(max_length=12, choices=CATEGORY, unique=True, default='Internet')
 
     def __str__(self):
         return self.name

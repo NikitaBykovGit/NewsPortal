@@ -1,17 +1,18 @@
 {% extends 'default.html' %}
+{% load i18n %}
 
 {% block content %}
-    <h1>Найти пост</h1>
+    <h1>{% trans "Найти пост" %}</h1>
     <hr>
     <form action="" method="get">
         {{ filterset.form.as_p }}
-        <input type="submit" value="Поиск" />
+        <input type="submit" value={% trans "Поиск"  %}/>
     </form>
 
     {% if posts %}
         {% include "news/post_list.html" %}
     {% else %}
-        <h2>Постов не найдено</h2>
+        <h2>{% trans "Постов не найдено" %}</h2>
     {% endif %}
 
     {% include "news/pagination.html" %}

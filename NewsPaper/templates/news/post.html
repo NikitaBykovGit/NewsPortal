@@ -1,14 +1,14 @@
 {% extends 'default.html' %}
-
+{% load i18n %}
 {% load custom_filters %}
 
 {% block navigation %}
     {% if post.author == request.user.author %}
         {% if perms.news.change_post %}
-            <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'post_update' post.type|get_url post.id %}">Редактировать</a></li>
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'post_update' post.type|get_url post.id %}">{% trans "Редактировать" %}</a></li>
         {% endif %}
         {% if perms.news.delete_post %}
-            <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'post_delete' post.type|get_url post.id %}">Удалить</a></li>
+            <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'post_delete' post.type|get_url post.id %}">{% trans "Удалить" %}</a></li>
         {% endif %}
     {% endif %}
 {% endblock navigation %}

@@ -1,4 +1,5 @@
 {% extends 'default.html' %}
+{% load i18n %}
 
 {% block navigation %}
 
@@ -7,23 +8,24 @@
 {% block title %}Информация о пользователе{% endblock %}
 
 {% block content %}
-        Никнейм: {{ user.username }}<br/>
+    <br/>
+        {% trans "Никнейм:" %} {{ user.username }}<br/>
         Email: {{ user.email }}<br/>
-        Был онлайн: {{ user.last_login|date:"d-m-Y" }}<br/>
-        Поставил лайков: {{ user_likes }}<br/>
-        Поставил дизлайков: {{ user_dislikes }}<br/>
-        Комментариев: {{ user.comment_set.count }}<br/>
+        {% trans "Был онлайн" %}: {{ user.last_login|date:"d-m-Y" }}<br/>
+        {% trans "Поставил лайков" %}: {{ user_likes }}<br/>
+        {% trans "Поставил дизлайков" %}: {{ user_dislikes }}<br/>
+        {% trans "Комментариев" %}: {{ user.comment_set.count }}<br/>
     {% if user.author %}
-        Группа: Авторы<br/>
-        Рейтинг: {{ user.author.rating }}<br/>
-        Постов: <a href="/?author={{ user.author.id }}">{{ user.author.post_set.count }}</a><br/>
-        Статей: <a href="/articles/?author={{ user.author.id }}">{{ author_articles_count }}</a><br/>
-        Новостей: <a href="/news/?author={{ user.author.id }}">{{ author_news_count }}</a><br/>
+        {% trans "Группа: Авторы" %}<br/>
+        {% trans "Рейтинг" %}: {{ user.author.rating }}<br/>
+        {% trans "Постов" %}: <a href="/?author={{ user.author.id }}">{{ user.author.post_set.count }}</a><br/>
+        {% trans "Статей" %}: <a href="/articles/?author={{ user.author.id }}">{{ author_articles_count }}</a><br/>
+        {% trans "Новостей" %}: <a href="/news/?author={{ user.author.id }}">{{ author_news_count }}</a><br/>
     {% else %}
-        Группа: Пользователи<br/>
+        {% trans "Группа: Пользователи" %}<br/>
     {% endif %}
     {% if request.user.id == user.id %}
-    <a href="/subscriptions">Управление подписками</a><br/>
-    <a href="/accounts/logout">Выйти из аккаунта</a>
+    <a href="/subscriptions">{% trans "Управление подписками" %}</a><br/>
+    <a href="/accounts/logout">{% trans "Выйти из аккаунта" %}</a>
     {% endif %}
 {% endblock content %}

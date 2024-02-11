@@ -1,14 +1,15 @@
 {% load custom_filters %}
+{% load i18n %}
 
 <table width="800">
     <tr>
-        <td>Заголовок</td>
-        <td>Дата публикации</td>
-        <td>Автор</td>
-        <td>Тип</td>
-        <td>Рейтинг</td>
-        <td>Комментариев</td>
-        <td>Текст</td>
+        <td>{% trans "Заголовок" %}</td>
+        <td>{% trans "Дата публикации" %}</td>
+        <td>{% trans "Автор" %}</td>
+        <td>{% trans "Тип" %}</td>
+        <td>{% trans "Рейтинг" %}</td>
+        <td>{% trans "Комментариев" %}</td>
+        <td>{% trans "Текст" %}</td>
     </tr>
     {% for post in posts %}
         <tr>

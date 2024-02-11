@@ -1,5 +1,12 @@
 {% load static %}
 {% load cache %}
+{% load i18n %}
+{% load custom_tags %}
+{% load tz %}
+
+{% current_time as ct %}
+{% timezones as timezones_for_template %}
+
 <!DOCTYPE html>
 <html lang="ru">
     <head>
@@ -9,28 +16,55 @@
         <meta name="author" content="" />
         <title>{% block title %}{% endblock title %}</title>
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+         <style>
+            body {background-color: {% if ct.hour >= 19 or ct.hour <= 7 %} darkcyan {% else %} powderblue {% endif %};}
+         </style>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                {% cache 60 newspapper %}
                 <a class="navbar-brand" href="/">NewsPaper</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                {% endcache newspapper %}
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         {% block navigation %}
                         {% endblock navigation %}
                         {% if user.is_authenticated %}
-                            <li class="nav-item"><a class="nav-link active" aria-current="page" href="/profile/{{ request.user.id }}">Привет, {{ request.user.get_username }}</a></li>
+                            <li class="nav-item"><a class="nav-link active" aria-current="page" href="/profile/{{ request.user.id }}">{% trans "Привет" %}, {{ request.user.get_username }}</a></li>
                         {% else %}
-                            <li class="nav-item"><a class="nav-link active" aria-current="page" href="/accounts/login">Вход</a></li>
-                            <li class="nav-item"><a class="nav-link active" aria-current="page" href="/accounts/signup">Регистрация</a></li>
+                            <li class="nav-item"><a class="nav-link active" aria-current="page" href="/accounts/login">{% trans "Вход" %}</a></li>
+                            <li class="nav-item"><a class="nav-link active" aria-current="page" href="/accounts/signup">{% trans "Регистрация" %}</a></li>
                         {% endif %}
                     </ul>
                 </div>
             </div>
         </nav>
+        <form action="{% url 'set_language' %}" method="POST"> {% csrf_token %}
+            <input type="hidden" name="next" value="{{ redirect_to }}">
+            {% get_current_language as LANGUAGE_CODE %}
+            <select name="language" id="">
+                {% get_available_languages as LANGUAGES %}
+                {% get_language_info_list for LANGUAGES as languages %}
+                {% for language in languages %}
+                    <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
+                        {{ language.name_local }} - {{ language.code }}
+                    </option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="set">
+        </form>
+        {% get_current_timezone as TIME_ZONE %}
+        <form action="{% url 'set_timezone' %}" method="POST"> {% csrf_token %}
+            <label for="timezone">Time zone:</label>
+            <select name="timezone">
+                {% for tz in timezones_for_template %}
+                    <option value="{{ tz }}"{% if tz == TIME_ZONE %} selected {% endif %}>{{ tz }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="set">
+        </form>
+        {{ TIME_ZONE }}
+        {{ ct|timezone:TIME_ZONE }}
         {% block content %}
         {% endblock content %}
     </body>

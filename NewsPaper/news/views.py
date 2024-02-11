@@ -1,16 +1,20 @@
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.views.decorators.csrf import csrf_protect
 from django.db.models import Exists, OuterRef
 from django.http import HttpResponseRedirect
+from django.utils import timezone
+from django.utils.translation import gettext as _
 from .models import Author, Post, Category, Subscriber, User, Grade
 from .forms import PostForm
 from .filters import PostFilter
 from abc import ABC
+
+import pytz
 
 
 class PostDetail(DetailView):
@@ -58,9 +62,9 @@ class NewsList(ListView):
         context = super().get_context_data(**kwargs)
         post_type = self.kwargs['type']
         if post_type == 'articles':
-            page_title = 'Статьи'
+            page_title = _('Статьи')
         if post_type == 'news':
-            page_title = 'Новости'
+            page_title = _('Новости')
         context['page_title'] = page_title
         context['post_type'] = post_type
         return context
@@ -91,7 +95,7 @@ class PostUpdate(PermissionRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['page_action'] = 'Редактирование'
+        context['page_action'] = _('Редактирование')
         return context
 
 
@@ -121,9 +125,9 @@ class PostCreate(PermissionRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.kwargs['type'] == 'articles':
-            context['page_action'] = 'Создание статьи'
+            context['page_action'] = _('Создание статьи')
         if self.kwargs['type'] == 'news':
-            context['page_action'] = 'Создание новости'
+            context['page_action'] = _('Создание новости')
         return context
 
 
@@ -209,3 +213,9 @@ class AddDislike(AddGrade, LoginRequiredMixin, View):
     def __init__(self):
         super().__init__()
         self.mark = 'Dislike'
+
+
+class TimeZone(View):
+    def post(self, request):
+        request.session['django_timezone'] = request.POST['timezone']
+        return redirect(request.META.get('HTTP_REFERER'))

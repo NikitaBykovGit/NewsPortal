@@ -1,0 +1,183 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-02-09 12:50+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: news/views.py:62 templates/news/posts.html:10
+msgid "Статьи"
+msgstr "Articles"
+
+#: news/views.py:64 templates/news/posts.html:9
+msgid "Новости"
+msgstr "News"
+
+#: news/views.py:95
+#, fuzzy
+#| msgid "Редактировать"
+msgid "Редактирование"
+msgstr "Edit"
+
+#: news/views.py:125
+#, fuzzy
+#| msgid "Создать"
+msgid "Создание статьи"
+msgstr "Create article"
+
+#: news/views.py:127
+msgid "Создание новости"
+msgstr "Create news"
+
+#: templates/default.html:24
+msgid "Привет"
+msgstr "Hello"
+
+#: templates/default.html:26
+msgid "Вход"
+msgstr "Login"
+
+#: templates/default.html:27
+msgid "Регистрация"
+msgstr "Registration"
+
+#: templates/news/news.html:9
+msgid "Создать"
+msgstr "Create"
+
+#: templates/news/news.html:18
+msgid "Новости Закончились"
+msgstr "News Out"
+
+#: templates/news/post.html:8
+msgid "Редактировать"
+msgstr "Edit"
+
+#: templates/news/post.html:11
+msgid "Удалить"
+msgstr "Delete"
+
+#: templates/news/post_delete.html:5
+msgid "Удаление"
+msgstr "Deletion"
+
+#: templates/news/post_delete.html:9
+msgid "Удаляем"
+msgstr "Delete"
+
+#: templates/news/post_edit.html:10
+msgid "Применить"
+msgstr "Apply"
+
+#: templates/news/post_list.html:6
+msgid "Заголовок"
+msgstr "Title"
+
+#: templates/news/post_list.html:7
+msgid "Дата публикации"
+msgstr "Data"
+
+#: templates/news/post_list.html:8
+msgid "Автор"
+msgstr "Author"
+
+#: templates/news/post_list.html:9
+msgid "Тип"
+msgstr "Type"
+
+#: templates/news/post_list.html:10 templates/news/profile.html:19
+msgid "Рейтинг"
+msgstr "Rating"
+
+#: templates/news/post_list.html:11 templates/news/profile.html:16
+msgid "Комментариев"
+msgstr "Comments"
+
+#: templates/news/post_list.html:12
+msgid "Текст"
+msgstr "Text"
+
+#: templates/news/post_search.html:5
+msgid "Найти пост"
+msgstr "Find post"
+
+#: templates/news/post_search.html:9 templates/news/posts.html:11
+msgid "Поиск"
+msgstr "Search"
+
+#: templates/news/post_search.html:15
+msgid "Постов не найдено"
+msgstr "No posts found"
+
+#: templates/news/posts.html:6 templates/news/posts.html:16
+msgid "Посты"
+msgstr "Posts"
+
+#: templates/news/posts.html:20
+msgid "Посты Закончились"
+msgstr "Posts Out"
+
+#: templates/news/profile.html:11
+msgid "Никнейм:"
+msgstr "Nick"
+
+#: templates/news/profile.html:13
+msgid "Был онлайн"
+msgstr "Online"
+
+#: templates/news/profile.html:14
+msgid "Поставил лайков"
+msgstr "Likes"
+
+#: templates/news/profile.html:15
+msgid "Поставил дизлайков"
+msgstr "Dislikes"
+
+#: templates/news/profile.html:18
+msgid "Группа: Авторы"
+msgstr "Group: Authors"
+
+#: templates/news/profile.html:20
+msgid "Постов"
+msgstr "Posts:"
+
+#: templates/news/profile.html:21
+msgid "Статей"
+msgstr "Articles:"
+
+#: templates/news/profile.html:22
+msgid "Новостей"
+msgstr "News:"
+
+#: templates/news/profile.html:24
+msgid "Группа: Пользователи"
+msgstr "Group: Users"
+
+#: templates/news/profile.html:27
+msgid "Управление подписками"
+msgstr "Subscription management"
+
+#: templates/news/profile.html:28
+msgid "Выйти из аккаунта"
+msgstr "Log out of your account"
+
+#: templates/news/subscriptions.html:18 templates/news/subscriptions.html:21
+msgid "Отписаться"
+msgstr "Unsubscribe"
+
+#: templates/news/subscriptions.html:20
+msgid "Подписаться"
+msgstr "Subscribe"
