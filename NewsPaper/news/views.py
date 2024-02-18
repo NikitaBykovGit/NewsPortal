@@ -1,20 +1,23 @@
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.views.decorators.csrf import csrf_protect
 from django.db.models import Exists, OuterRef
 from django.http import HttpResponseRedirect
-from django.utils import timezone
 from django.utils.translation import gettext as _
-from .models import Author, Post, Category, Subscriber, User, Grade
-from .forms import PostForm
-from .filters import PostFilter
+from rest_framework import viewsets, mixins
+from rest_framework import permissions
 from abc import ABC
 
-import pytz
+from rest_framework.viewsets import GenericViewSet
+
+from .models import Subscriber, Grade
+from .forms import PostForm
+from .filters import PostFilter
+from .serializers import *
 
 
 class PostDetail(DetailView):
@@ -215,7 +218,42 @@ class AddDislike(AddGrade, LoginRequiredMixin, View):
         self.mark = 'Dislike'
 
 
-class TimeZone(View):
-    def post(self, request):
-        request.session['django_timezone'] = request.POST['timezone']
-        return redirect(request.META.get('HTTP_REFERER'))
+class PostViewSet(
+    mixins.RetrieveModelMixin,
+    mixins.DestroyModelMixin,
+    mixins.ListModelMixin,
+    GenericViewSet
+):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = [permissions.DjangoModelPermissionsOrAnonReadOnly]
+
+
+class NewsViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.filter(type='News')
+    serializer_class = PostSerializer
+    permission_classes = [permissions.DjangoModelPermissionsOrAnonReadOnly]
+
+
+class ArticleViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.filter(type='Article')
+    serializer_class = PostSerializer
+    permission_classes = [permissions.DjangoModelPermissionsOrAnonReadOnly]
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [permissions.DjangoModelPermissionsOrAnonReadOnly]
+
+
+class AuthorViewSet(viewsets.ModelViewSet):
+    queryset = Author.objects.all()
+    serializer_class = AuthorSerializer
+    permission_classes = [permissions.DjangoModelPermissionsOrAnonReadOnly]
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.DjangoModelPermissionsOrAnonReadOnly]

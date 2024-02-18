@@ -1,10 +1,9 @@
 from django.urls import path
-from .views import (NewsList, PostsList, PostDetail, PostCreate, PostSearch, PostUpdate,
-                    PostDelete, subscriptions, ProfileDetail, Addlike, AddDislike, TimeZone)
+from .views import PostsList, PostSearch, subscriptions, ProfileDetail, PostDetail, PostCreate, PostUpdate, Addlike, \
+    AddDislike, PostDelete, NewsList
 
 urlpatterns = [
     path('', PostsList.as_view(), name='posts_list'),
-    path('timezone', TimeZone.as_view(), name='set_timezone'),
     path('subscriptions/', subscriptions, name='subscriptions'),
     path('search/', PostSearch.as_view(), name='post_search'),
     path('profile/<int:pk>', ProfileDetail.as_view(), name='profile'),
