@@ -1,19 +1,16 @@
 from django.contrib.auth.models import User
 
-from .models import Post, Category, Author
+from .models import Post, Author
 from rest_framework import serializers
 
 
 class PostSerializer(serializers.HyperlinkedModelSerializer):
+    category = serializers.SlugRelatedField(slug_field='name', read_only=True, many=True)
+    author = serializers.SlugRelatedField(slug_field='user_username', read_only=True)
+
     class Meta:
         model = Post
-        fields = ['id', 'author', 'type', 'title', 'text', 'rating', 'time_in']
-
-
-class CategorySerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Category
-        fields = ['id', 'name']
+        fields = '__all__'
 
 
 class AuthorSerializer(serializers.HyperlinkedModelSerializer):

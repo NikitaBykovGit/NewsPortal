@@ -1,13 +1,12 @@
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from news.views import PostViewSet, NewsViewSet, ArticleViewSet, CategoryViewSet, AuthorViewSet, UserViewSet
+from news.views import PostViewSet, NewsViewSet, ArticleViewSet, AuthorViewSet, UserViewSet
 
 router = routers.DefaultRouter()
 router.register(r'posts', PostViewSet)
 router.register(r'articles', ArticleViewSet, basename="artciles")
 router.register(r'news', NewsViewSet, basename="news")
-router.register(r'category', CategoryViewSet)
 router.register(r'authors', AuthorViewSet)
 router.register(r'users', UserViewSet)
 
